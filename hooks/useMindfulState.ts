@@ -3,6 +3,18 @@ import { storageService } from '../services/storage';
 import { Reflection, SleepReflectionsData, getTodayStr, AIInsightResult } from '../types';
 import { STORAGE_KEYS, DEFAULT_RITUAL_ITEMS } from '../constants';
 
+// Helper for safe ID generation
+export const generateId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    try {
+      return crypto.randomUUID();
+    } catch (e) {
+      // Fallback if randomUUID fails
+    }
+  }
+  return Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+};
+
 export const useMindfulState = () => {
   const [reflections, setReflections] = useState<Reflection[]>([]);
   const [sleepData, setSleepData] = useState<SleepReflectionsData>({});
@@ -37,7 +49,7 @@ export const useMindfulState = () => {
 
   const addReflection = (data: Omit<Reflection, 'id' | 'date' | 'timestamp'>) => {
     const newReflection: Reflection = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       date: selectedDate,
       timestamp: Date.now(),
       ...data

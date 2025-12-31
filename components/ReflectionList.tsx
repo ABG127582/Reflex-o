@@ -20,6 +20,7 @@ const ReflectionList: React.FC<ReflectionListProps> = ({ reflections, onDelete, 
   }, [reflections, selectedCategory]);
 
   const HighlightedText = ({ text, query }: { text: string, query?: string }) => {
+      if (typeof text !== 'string') return null; // Safe guard against crashes
       if (!query || query.length < 2) return <>{text}</>;
       const parts = text.split(new RegExp(`(${query})`, 'gi'));
       return <>{parts.map((part, i) => part.toLowerCase() === query.toLowerCase() ? <span key={i} className="bg-yellow-200 dark:bg-yellow-900/60 text-slate-900 dark:text-yellow-100 rounded px-0.5">{part}</span> : part)}</>;

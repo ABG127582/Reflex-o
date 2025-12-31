@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CATEGORIES, REFLECTION_CHECKLISTS } from '../constants';
+import { CATEGORIES, REFLECTION_CHECKLISTS, MOOD_OPTIONS } from '../constants';
 import { Reflection, RitualItem } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
@@ -108,6 +108,32 @@ const ReflectionForm: React.FC<ReflectionFormProps> = ({ onSave, onGenerateInsig
 
         <div className="bg-white dark:bg-slate-800 rounded-[1.5rem] shadow-xl border border-white/50 dark:border-slate-700 p-1">
           <div className="space-y-4 bg-slate-50 dark:bg-slate-900/50 rounded-[1.4rem] p-6 group">
+            
+            <div className="flex flex-wrap gap-2 mb-2 items-center">
+              <select 
+                  value={category} 
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-wider rounded-lg px-3 py-2 outline-none focus:border-brand-500 shadow-sm cursor-pointer"
+              >
+                  {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+
+              <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+
+              <div className="flex bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-1 gap-1 shadow-sm">
+                  {MOOD_OPTIONS.map((m) => (
+                      <button
+                          key={m.value}
+                          onClick={() => setMood(m.value)}
+                          className={`w-7 h-7 flex items-center justify-center rounded-md text-sm transition-all ${mood === m.value ? m.color + ' shadow-sm scale-110' : 'text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 grayscale hover:grayscale-0'}`}
+                          title={m.label}
+                      >
+                          {m.icon}
+                      </button>
+                  ))}
+              </div>
+            </div>
+
             <div className="relative">
                 <div className="absolute right-2 top-0 flex gap-2 z-10 opacity-70 hover:opacity-100 transition-opacity">
                     <button onClick={() => { setText(''); setSelectedItems(new Set()); }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-400 hover:text-red-500 hover:border-red-200 transition-colors" title="Limpar"><i className="fas fa-eraser text-xs"></i></button>

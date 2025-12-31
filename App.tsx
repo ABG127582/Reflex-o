@@ -6,7 +6,7 @@ import MoodChart from './components/MoodChart';
 import DailyQuote from './components/DailyQuote';
 import AIModal from './components/AIModal';
 import Toast from './components/Toast';
-import { useMindfulState } from './hooks/useMindfulState';
+import { useMindfulState, generateId } from './hooks/useMindfulState';
 import { generateBiopsychosocialInsights } from './services/geminiService';
 import { getTodayStr } from './types';
 import { DEFAULT_RITUAL_ITEMS } from './constants';
@@ -35,7 +35,7 @@ const App: React.FC = () => {
     localStorage.setItem('mindful_theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  const showToast = (message: string, type: 'success' | 'error' | 'info') => setToast({ id: crypto.randomUUID(), message, type });
+  const showToast = (message: string, type: 'success' | 'error' | 'info') => setToast({ id: generateId(), message, type });
 
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0] && confirm("Mesclar dados?")) {
