@@ -1,0 +1,7 @@
+{
+  "name": "Reflexão",
+  "description": "A holistic journaling application for reflections, sleep tracking, and AI-powered biopsychosocial insights.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
